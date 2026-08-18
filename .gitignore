@@ -1,0 +1,12 @@
+node_modules/
+analyzer/build/
+.next/
+out/
+dist/
+.env
+.env.local
+*.o
+*.obj
+.DS_Store
+compile_commands.json
+analyzer-output/
