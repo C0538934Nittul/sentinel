@@ -98,6 +98,14 @@ returning `{}` even once rules exist, until you implement it yourself).
 - Incident status enum: `Open`, `Investigating`, `Closed` — no `Ignored`/`FalsePositive` state
   added; add one later if your rubric wants a "dismissed" workflow.
 
+## Client (client/) -- Step 3, Phase 4 correction
+
+- `eslint` was pinned to `^9.9.0` in the original skeleton but `eslint-config-next@14.2.5`
+  only supports ESLint 7/8 as a peer dependency -- `npm install` failed with an ERESOLVE
+  conflict. Fixed by pinning `eslint` to `^8.57.0` (matching what Next.js 14's own project
+  template uses), not by installing with `--legacy-peer-deps`/`--force`. If you later upgrade
+  to Next.js 15 (which supports ESLint 9), revisit this pin.
+
 ## Client (client/)
 
 - `NEXT_PUBLIC_API_BASE_URL` read at build/runtime via `process.env`, default

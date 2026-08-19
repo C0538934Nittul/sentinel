@@ -68,3 +68,12 @@ AI-authored logic in this pass -- they remain `TODO(student)` throughout every p
   `.optional()` output. Pure type-level fix, no runtime behavior change.
 - `api/.env` created from `.env.example` with the values that match the Phase 2 build output
   (`ANALYZER_BIN_PATH=analyzer/build/debug/sentinel-analyzer`). Not committed (gitignored).
+
+## Phase 4 -- Client typechecks and renders
+
+- `client/package.json` -- pinned `eslint` from `^9.9.0` down to `^8.57.0` to resolve a real
+  `npm install` ERESOLVE conflict against `eslint-config-next@14.2.5`'s peer dependency range.
+  Not a suppression -- `npm install --legacy-peer-deps`/`--force` was deliberately avoided; see
+  `docs/ASSUMPTIONS.md`. No other client code changed -- typecheck, build, and all four routes
+  (`/`, `/events`, `/incidents`, `/incidents/[id]`) worked on the first real attempt once
+  dependencies installed.
