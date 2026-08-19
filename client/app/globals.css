@@ -1,0 +1,4 @@
+/* Component: client/app. Status: complete (Tailwind entrypoint, no custom styles yet). */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
