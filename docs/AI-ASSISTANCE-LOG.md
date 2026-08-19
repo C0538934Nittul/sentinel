@@ -152,3 +152,30 @@ were **not** touched -- still `TODO(student)`, still throwing/returning `{}` as 
   events loaded, 3 rules registered, 0 incidents -- correct given `analyze()` is stubbed), and
   confirmed GET-by-id/PATCH-status/DELETE all work correctly against a manually-inserted test
   incident, including their 404 paths. Test data cleared from MongoDB afterward.
+
+## Phase 5 -- First-draft implementations (client)
+
+- `client/app/page.tsx` -- fetches open-incident and total-event counts on mount via
+  `listIncidents()`/`listEvents()`; fails silently to "—" per-tile rather than showing a
+  full-page error (dashboard summary tiles, not the primary error-surfacing UI).
+- `client/app/events/page.tsx` -- fetches events on mount via `listEvents()`; passes a
+  `fetchEvents` callback into `SubmitEventForm` as `onSubmitted` so a successful manual
+  submission refreshes the table.
+- `client/app/incidents/page.tsx` -- fetches incidents on mount via `listIncidents()`; passes
+  `fetchIncidents` into `AnalyzeButton` as `onAnalyzed` so a completed analysis run re-queries
+  the server (rather than trusting the analyze response's incident list directly, which is
+  currently always empty since `ThreatAnalyzer::analyze` is unimplemented).
+- `client/app/incidents/[id]/page.tsx` -- fetches the single incident via `getIncident(id)` on
+  mount / id change, with a `cancelled` flag to avoid a state update after unmount.
+- `client/components/SubmitEventForm.tsx` -- added an `onSubmitted` prop; clears the form and
+  calls it after a successful submission.
+- `client/components/AnalyzeButton.tsx` -- removed a stale `TODO(student)` comment now that the
+  refresh strategy is decided (delegate to the parent page's re-fetch, not local state merging).
+- **Verify:** no browser automation tool was available in this session (the Chrome extension
+  wasn't connected), so client-side React rendering/hydration was **not** visually confirmed.
+  What *was* confirmed: clean `tsc --noEmit` and `next build`, and that the exact HTTP responses
+  these components fetch (`GET /v1/events`, `GET /v1/incidents`, with an
+  `Origin: http://localhost:3000` header matching what a real browser sends) return data in the
+  shape `lib/types.ts` expects, with CORS headers present. Please load the app in an actual
+  browser and confirm the dashboard/events/incidents pages populate as expected before relying
+  on this being fully verified.

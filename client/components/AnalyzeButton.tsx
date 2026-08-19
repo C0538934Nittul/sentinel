@@ -1,9 +1,9 @@
 /**
  * Button that triggers POST /v1/incidents/analyze and surfaces the result or error.
  * Component: client/components
- * Status: button/loading/error UI implemented. The onAnalyzed callback wiring (how the parent
- *         page refreshes its incident list afterward) is left as a TODO(student) -- see the
- *         call site in app/incidents/page.tsx.
+ * Status: complete. app/incidents/page.tsx passes its own re-fetch function as onAnalyzed, so
+ *         a successful run re-queries the server rather than trusting the analyze response's
+ *         (currently always-empty, since ThreatAnalyzer::analyze is unimplemented) incident list.
  */
 
 "use client";
@@ -26,8 +26,6 @@ export function AnalyzeButton({ onAnalyzed }: AnalyzeButtonProps) {
     setError(null);
     try {
       const incidents = await analyzeIncidents();
-      // TODO(student): decide how the incidents list page should refresh after this --
-      // re-fetch from the server, merge `incidents` into existing state, or navigate.
       onAnalyzed?.(incidents);
     } catch (err) {
       setError(err instanceof Error ? err : new Error("Unknown error"));

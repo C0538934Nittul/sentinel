@@ -1,14 +1,14 @@
 /**
  * Incidents page: lists incidents and offers a button to trigger a new analysis run.
  * Component: client/app/incidents
- * Status: page shell and state wiring implemented; the fetch-on-mount call and the
- *         AnalyzeButton refresh callback are TODO(student).
+ * Status: First-draft implementation (Step 3, Phase 5) -- fetches on mount and re-fetches
+ *         after a successful analysis run.
  */
 
 "use client";
 
-import { useEffect, useState } from "react";
-import type { ApiError } from "@/lib/api";
+import { useCallback, useEffect, useState } from "react";
+import { listIncidents, type ApiError } from "@/lib/api";
 import type { Incident } from "@/lib/types";
 import { AnalyzeButton } from "@/components/AnalyzeButton";
 import { IncidentList } from "@/components/IncidentList";
@@ -18,22 +18,27 @@ export default function IncidentsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<ApiError | Error | null>(null);
 
-  useEffect(() => {
-    // TODO(student): call listIncidents() from lib/api, setIncidents/setError accordingly,
-    // then setLoading(false).
+  const fetchIncidents = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      setIncidents(await listIncidents());
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Unknown error"));
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  function handleAnalyzed(newIncidents: Incident[]) {
-    // TODO(student): merge newIncidents into `incidents`, or re-fetch the full list -- your
-    // call. void keeps this stub from erroring on the unused parameter.
-    void newIncidents;
-  }
+  useEffect(() => {
+    fetchIncidents();
+  }, [fetchIncidents]);
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Incidents</h1>
-        <AnalyzeButton onAnalyzed={handleAnalyzed} />
+        <AnalyzeButton onAnalyzed={fetchIncidents} />
       </div>
       <IncidentList incidents={incidents} loading={loading} error={error} />
     </div>

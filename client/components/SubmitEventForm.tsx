@@ -1,9 +1,10 @@
 /**
  * Form for manually submitting a single security event via POST /v1/events.
  * Component: client/components
- * Status: form UI and field state implemented. Submission calls the real lib/api.submitEvent,
- *         but form-level validation (beyond HTML `required`) and success handling (e.g.
- *         clearing the form, refreshing an event list) are left as TODO(student).
+ * Status: First-draft implementation (Step 3, Phase 5) -- submits via lib/api.submitEvent,
+ *         clears the form and calls the optional onSubmitted callback on success so the owning
+ *         page can refresh its list. Validation is still just the HTML `required` attributes;
+ *         server-side Zod validation is the real backstop (errors surface via ErrorBanner).
  */
 
 "use client";
@@ -21,7 +22,12 @@ const initialFormState = {
   host: "",
 };
 
-export function SubmitEventForm() {
+interface SubmitEventFormProps {
+  /** Called after a successful submission, e.g. so the owning page can re-fetch its list. */
+  onSubmitted?: () => void;
+}
+
+export function SubmitEventForm({ onSubmitted }: SubmitEventFormProps) {
   const [form, setForm] = useState(initialFormState);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<ApiError | Error | null>(null);
@@ -40,7 +46,8 @@ export function SubmitEventForm() {
         ...(form.account ? { account: form.account } : {}),
       };
       await submitEvent(event);
-      // TODO(student): clear the form and/or refresh whatever list is showing this event.
+      setForm(initialFormState);
+      onSubmitted?.();
     } catch (err) {
       setError(err instanceof Error ? err : new Error("Unknown error"));
     } finally {

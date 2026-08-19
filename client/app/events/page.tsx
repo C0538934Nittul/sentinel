@@ -1,15 +1,14 @@
 /**
  * Events page: lists submitted security events and offers a form to submit one manually.
  * Component: client/app/events
- * Status: page shell and state wiring implemented; the actual fetch-on-mount call is a
- *         TODO(student) -- EventTable will show its loading state indefinitely until this is
- *         filled in.
+ * Status: First-draft implementation (Step 3, Phase 5) -- fetches on mount and re-fetches
+ *         after a successful manual submission.
  */
 
 "use client";
 
-import { useEffect, useState } from "react";
-import type { ApiError } from "@/lib/api";
+import { useCallback, useEffect, useState } from "react";
+import { listEvents, type ApiError } from "@/lib/api";
 import type { SecurityEvent } from "@/lib/types";
 import { EventTable } from "@/components/EventTable";
 import { SubmitEventForm } from "@/components/SubmitEventForm";
@@ -19,11 +18,21 @@ export default function EventsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<ApiError | Error | null>(null);
 
-  useEffect(() => {
-    // TODO(student): call listEvents() from lib/api, setEvents/setError accordingly, then
-    // setLoading(false). Consider re-fetching after SubmitEventForm succeeds (see its
-    // TODO(student) note) so a newly submitted event shows up without a manual refresh.
+  const fetchEvents = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      setEvents(await listEvents());
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Unknown error"));
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchEvents();
+  }, [fetchEvents]);
 
   return (
     <div className="space-y-8">
@@ -36,7 +45,7 @@ export default function EventsPage() {
       <section>
         <h2 className="text-lg font-medium">Submit an event</h2>
         <div className="mt-4">
-          <SubmitEventForm />
+          <SubmitEventForm onSubmitted={fetchEvents} />
         </div>
       </section>
     </div>
