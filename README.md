@@ -169,6 +169,7 @@ Located in `sample-data/`, each dataset is designed to exercise a specific rule 
 | `success-after-failures.json` | `SUCCESS_AFTER_FAILURES` |
 | `multi-account-probe.json` | `MULTI_ACCOUNT_PROBE` |
 | `mixed-events.json` | Multiple rules embedded in general noise |
+| `boundary-events.json` | `REPEATED_AUTH_FAILURE`'s exact threshold/window edges |
 | `malformed-events.json` | Analyzer input validation / error handling |
 
 See `sample-data/README.md` for exact counts, time deltas, and the reasoning behind each file.

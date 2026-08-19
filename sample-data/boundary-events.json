@@ -1,0 +1,323 @@
+{
+  "events": [
+    {
+      "eventId": "evt-boundary-001",
+      "timestamp": "2026-03-01T10:00:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-002",
+      "timestamp": "2026-03-01T10:00:12.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-003",
+      "timestamp": "2026-03-01T10:00:24.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-004",
+      "timestamp": "2026-03-01T10:00:36.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-005",
+      "timestamp": "2026-03-01T10:00:48.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-006",
+      "timestamp": "2026-03-01T10:01:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-007",
+      "timestamp": "2026-03-01T10:01:12.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-008",
+      "timestamp": "2026-03-01T10:01:24.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-009",
+      "timestamp": "2026-03-01T10:01:36.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-010",
+      "timestamp": "2026-03-01T10:01:48.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.120",
+      "host": "edge-case-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary1"
+    },
+    {
+      "eventId": "evt-boundary-011",
+      "timestamp": "2026-03-01T10:16:40.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-012",
+      "timestamp": "2026-03-01T10:16:52.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-013",
+      "timestamp": "2026-03-01T10:17:04.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-014",
+      "timestamp": "2026-03-01T10:17:16.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-015",
+      "timestamp": "2026-03-01T10:17:28.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-016",
+      "timestamp": "2026-03-01T10:17:40.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-017",
+      "timestamp": "2026-03-01T10:17:52.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-018",
+      "timestamp": "2026-03-01T10:18:04.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-019",
+      "timestamp": "2026-03-01T10:18:16.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.121",
+      "host": "edge-case-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary2"
+    },
+    {
+      "eventId": "evt-boundary-020",
+      "timestamp": "2026-03-01T10:33:20.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-021",
+      "timestamp": "2026-03-01T10:33:34.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-022",
+      "timestamp": "2026-03-01T10:33:48.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-023",
+      "timestamp": "2026-03-01T10:34:02.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-024",
+      "timestamp": "2026-03-01T10:34:16.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-025",
+      "timestamp": "2026-03-01T10:34:30.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-026",
+      "timestamp": "2026-03-01T10:34:44.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-027",
+      "timestamp": "2026-03-01T10:34:58.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-028",
+      "timestamp": "2026-03-01T10:35:12.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    },
+    {
+      "eventId": "evt-boundary-029",
+      "timestamp": "2026-03-01T10:35:25.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.122",
+      "host": "edge-case-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "boundary3"
+    }
+  ]
+}

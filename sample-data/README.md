@@ -1,6 +1,6 @@
 # Sample data
 
-Six synthetic datasets for exercising (or deliberately not exercising) the three detection
+Seven synthetic datasets for exercising (or deliberately not exercising) the three detection
 rules. All IPs are from `203.0.113.0/24` (RFC 5737 TEST-NET-3, reserved for documentation).
 All usernames, hostnames, and process names are fabricated. Every file is wrapped as
 `{ "events": [...] }` per `docs/data-contract.md`.
@@ -45,14 +45,14 @@ seconds** total.
 
 ## `mixed-events.json`
 
-**Fires two rules**, embedded in general noise. 66 events total:
+**Fires two rules**, embedded in general noise. 69 events total:
 
 - **38 baseline noise events** (`AUTH_SUCCESS` / `FILE_ACCESS`, rotating across 3 sources, 4
   accounts, 4 hosts, spaced 75s apart) — establishes an uneventful backdrop.
-- **Pattern A — `REPEATED_AUTH_FAILURE`:** 10 `AUTH_FAILURE` events from source
-  `203.0.113.80` against account `guest`, spaced 10s apart (90s span), starting partway through
-  the file. Count in the 120s window: **10** (threshold: ≥10 — an exact-boundary case,
-  deliberately included alongside the comfortably-over-threshold examples elsewhere).
+- **Pattern A — `REPEATED_AUTH_FAILURE`:** 13 `AUTH_FAILURE` events from source
+  `203.0.113.80` against account `guest`, spaced 8s apart (96s span), starting partway through
+  the file. Count in the 120s window: **13** (threshold: ≥10). Comfortably over the threshold
+  and deliberately **not** an exact-boundary case — see `boundary-events.json` for that.
 - **Pattern B — `MULTI_ACCOUNT_PROBE`:** 6 `AUTH_FAILURE` events from source `203.0.113.90`
   against 6 distinct accounts (`svc01`–`svc06`), spaced 25s apart (125s span), starting well
   after pattern A ends. Distinct accounts in the 180s window: **6** (threshold: ≥5).
@@ -61,6 +61,28 @@ seconds** total.
 
 Patterns A and B are separated by roughly 1400 seconds so they cannot be mistaken for a single
 combined cluster.
+
+## `boundary-events.json`
+
+**Exercises the exact edges of `REPEATED_AUTH_FAILURE`'s threshold (10) and window (120s)** —
+three independent cases, each on its own source IP/account so they can't interact. Unlike every
+other file here, this one is deliberately about *precision*, not comfortable margins.
+
+| Case | Source | Count | Span | Max count in any 120s window | Result |
+|---|---|---|---|---|---|
+| 1 — exact count, within window | `203.0.113.120` | 10 | 108s | 10 | **Fires** (10 ≥ 10, span ≤ 120s) |
+| 2 — one below threshold | `203.0.113.121` | 9 | 96s | 9 | **Does not fire** (9 < 10) |
+| 3 — right count, window exceeded | `203.0.113.122` | 10 | 125s | 9 | **Does not fire** (no single 120s window contains all 10) |
+
+Case 3 is the subtle one: the file has 10 `AUTH_FAILURE` events on that source, but they're
+spread across 125 seconds, so the widest 120-second slice only ever catches 9 of them — the
+window, not the count, is what excludes it. This was confirmed by actually computing the
+sliding-window maximum over the timestamps, not by construction.
+
+Cases 2 and 3 each isolate a single failing condition (count-only, window-only) against the
+same threshold/window pair Case 1 satisfies, so a rule implementation that passes Case 1 but
+also accidentally fires on Case 2 or Case 3 has a specific, diagnosable bug rather than a vague
+"something's off."
 
 ## `malformed-events.json`
 
