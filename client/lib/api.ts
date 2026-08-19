@@ -63,8 +63,7 @@ export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> 
 }
 
 // --- Typed convenience wrappers ------------------------------------------------------------
-// Data fetching/shaping beyond a direct pass-through stays a TODO(student) -- these are thin
-// wrappers over apiFetch, not business logic.
+// Thin wrappers over apiFetch, not business logic -- the pages under app/ call these directly.
 
 export function listEvents(): Promise<SecurityEvent[]> {
   return apiFetch<SecurityEvent[]>("/v1/events");

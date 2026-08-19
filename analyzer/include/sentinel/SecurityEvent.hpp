@@ -2,8 +2,8 @@
  * @file SecurityEvent.hpp
  * @brief Immutable, validated value type representing one security event.
  * @component analyzer (sentinel-core)
- * @status Declarations complete. Implementation in src/SecurityEvent.cpp is stubbed
- *         (TODO(student)) -- construction/validation/JSON parsing logic is assessed work.
+ * @status Declarations complete. src/SecurityEvent.cpp has a first-draft implementation
+ *         (Step 3, Phase 5) -- not the final assessed version, review and rewrite as needed.
  */
 
 #pragma once
