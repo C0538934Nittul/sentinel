@@ -1,0 +1,269 @@
+openapi: 3.1.0
+info:
+  title: Sentinel API
+  version: 0.1.0
+  description: >
+    REST API for the Sentinel SOC application. Persists security events and incidents in
+    MongoDB and triggers analysis by spawning the C++ sentinel-analyzer process. See
+    docs/data-contract.md for the canonical JSON shapes this spec mirrors.
+servers:
+  - url: http://localhost:3001/v1
+    description: Local development
+
+tags:
+  - name: health
+  - name: events
+  - name: incidents
+
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      tags: [health]
+      summary: Service health check
+      responses:
+        "200":
+          description: Service is reachable (Mongo may or may not be connected).
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, mongo, uptimeSeconds]
+                properties:
+                  status:
+                    type: string
+                    enum: [ok]
+                  mongo:
+                    type: string
+                    enum: [connected, disconnected]
+                  uptimeSeconds:
+                    type: number
+
+  /events:
+    get:
+      operationId: listEvents
+      tags: [events]
+      summary: List ingested security events
+      parameters:
+        - name: sourceIp
+          in: query
+          required: false
+          schema: { type: string }
+        - name: eventType
+          in: query
+          required: false
+          schema: { $ref: "#/components/schemas/EventType" }
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 1000 }
+      responses:
+        "200":
+          description: List of events.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/SecurityEvent" }
+        "400":
+          $ref: "#/components/responses/ValidationError"
+    post:
+      operationId: createEvents
+      tags: [events]
+      summary: Submit one or more security events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - { $ref: "#/components/schemas/SecurityEvent" }
+                - type: object
+                  required: [events]
+                  properties:
+                    events:
+                      type: array
+                      minItems: 1
+                      items: { $ref: "#/components/schemas/SecurityEvent" }
+      responses:
+        "201":
+          description: Events created.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/SecurityEvent" }
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "409":
+          description: An eventId in the request already exists.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ApiError" }
+
+  /incidents:
+    get:
+      operationId: listIncidents
+      tags: [incidents]
+      summary: List incidents produced by analysis
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema: { $ref: "#/components/schemas/IncidentStatus" }
+        - name: limit
+          in: query
+          required: false
+          schema: { type: integer, minimum: 1, maximum: 1000 }
+      responses:
+        "200":
+          description: List of incidents.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Incident" }
+        "400":
+          $ref: "#/components/responses/ValidationError"
+
+  /incidents/analyze:
+    post:
+      operationId: analyzeIncidents
+      tags: [incidents]
+      summary: Run the analyzer against stored events and persist resulting incidents
+      responses:
+        "201":
+          description: Newly created incidents from this analysis run.
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/Incident" }
+        "500":
+          description: The analyzer process failed, timed out, or returned invalid output.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ApiError" }
+
+  /incidents/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      operationId: getIncident
+      tags: [incidents]
+      summary: Fetch a single incident
+      responses:
+        "200":
+          description: The incident.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Incident" }
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    delete:
+      operationId: deleteIncident
+      tags: [incidents]
+      summary: Delete an incident
+      responses:
+        "204":
+          description: Deleted, no content.
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /incidents/{id}/status:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: { type: string }
+    patch:
+      operationId: updateIncidentStatus
+      tags: [incidents]
+      summary: Update incident status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status: { $ref: "#/components/schemas/IncidentStatus" }
+      responses:
+        "200":
+          description: Updated incident.
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Incident" }
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+components:
+  responses:
+    ValidationError:
+      description: Request failed schema validation.
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/ApiError" }
+    NotFoundError:
+      description: Resource does not exist.
+      content:
+        application/json:
+          schema: { $ref: "#/components/schemas/ApiError" }
+
+  schemas:
+    EventType:
+      type: string
+      enum: [AUTH_SUCCESS, AUTH_FAILURE, FILE_ACCESS, PROCESS_START, NETWORK_CONNECTION]
+
+    IncidentSeverity:
+      type: string
+      enum: [LOW, MEDIUM, HIGH]
+
+    IncidentStatus:
+      type: string
+      enum: [Open, Investigating, Closed]
+
+    SecurityEvent:
+      type: object
+      required: [eventId, timestamp, eventType, sourceIp, host]
+      properties:
+        eventId: { type: string }
+        timestamp: { type: string, format: date-time }
+        eventType: { $ref: "#/components/schemas/EventType" }
+        sourceIp: { type: string }
+        account: { type: string }
+        host: { type: string }
+        details: { type: object, additionalProperties: true }
+
+    Incident:
+      type: object
+      required: [id, ruleId, severity, riskScore, detectedAt, supportingEventIds, summary, status]
+      properties:
+        id: { type: string }
+        ruleId: { type: string }
+        severity: { $ref: "#/components/schemas/IncidentSeverity" }
+        riskScore: { type: integer, minimum: 0, maximum: 100 }
+        detectedAt: { type: string, format: date-time }
+        supportingEventIds:
+          type: array
+          items: { type: string }
+        summary: { type: string }
+        status: { $ref: "#/components/schemas/IncidentStatus" }
+
+    ApiError:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: {}

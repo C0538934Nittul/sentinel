@@ -1,0 +1,123 @@
+### Sentinel API -- manual request collection (VS Code REST Client extension format)
+### Component: api/tests
+### Status: complete. Run the API (npm run dev) and MongoDB locally first.
+### Every endpoint has at least one success case and one deliberate-failure case.
+
+@baseUrl = http://localhost:3001/v1
+
+### --- Health -----------------------------------------------------------------------------
+
+# Success: service is up.
+GET {{baseUrl}}/health
+
+### --- Events -------------------------------------------------------------------------------
+
+# Success: list all events.
+GET {{baseUrl}}/events
+
+### Success: list events filtered by sourceIp.
+GET {{baseUrl}}/events?sourceIp=203.0.113.50
+
+### Success: create a single event.
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "eventId": "evt-http-001",
+  "timestamp": "2026-03-01T10:00:00.000Z",
+  "eventType": "AUTH_FAILURE",
+  "sourceIp": "203.0.113.201",
+  "account": "jdoe",
+  "host": "workstation-01",
+  "details": { "method": "ssh" }
+}
+
+### Success: create a batch of events.
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "events": [
+    {
+      "eventId": "evt-http-002",
+      "timestamp": "2026-03-01T10:00:05.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.201",
+      "account": "jdoe",
+      "host": "workstation-01",
+      "details": { "method": "ssh" }
+    }
+  ]
+}
+
+### FAILURE: invalid body -- missing required "host" field. Expect 400 VALIDATION_ERROR.
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "eventId": "evt-http-003",
+  "timestamp": "2026-03-01T10:00:00.000Z",
+  "eventType": "AUTH_FAILURE",
+  "sourceIp": "203.0.113.201"
+}
+
+### FAILURE: duplicate eventId (run the "create a single event" request above twice).
+### Expect 409 CONFLICT on the second attempt.
+POST {{baseUrl}}/events
+Content-Type: application/json
+
+{
+  "eventId": "evt-http-001",
+  "timestamp": "2026-03-01T10:00:00.000Z",
+  "eventType": "AUTH_FAILURE",
+  "sourceIp": "203.0.113.201",
+  "account": "jdoe",
+  "host": "workstation-01",
+  "details": { "method": "ssh" }
+}
+
+### --- Incidents ----------------------------------------------------------------------------
+
+# Success: list all incidents.
+GET {{baseUrl}}/incidents
+
+### Success: list incidents filtered by status.
+GET {{baseUrl}}/incidents?status=Open
+
+### FAILURE: invalid status filter value. Expect 400 VALIDATION_ERROR.
+GET {{baseUrl}}/incidents?status=NotARealStatus
+
+### Success: fetch a single incident (replace with a real id from the list above).
+GET {{baseUrl}}/incidents/000000000000000000000000
+
+### FAILURE: unknown incident id. Expect 404 NOT_FOUND.
+GET {{baseUrl}}/incidents/000000000000000000000000
+
+### Success: trigger analysis of currently-stored events.
+POST {{baseUrl}}/incidents/analyze
+
+### FAILURE (environment-dependent): analyzer binary not built/available yet.
+### Expect 500 ANALYZER_ERROR until analyzer/build/debug/sentinel-analyzer exists.
+POST {{baseUrl}}/incidents/analyze
+
+### Success: update incident status (replace :id with a real id).
+PATCH {{baseUrl}}/incidents/000000000000000000000000/status
+Content-Type: application/json
+
+{
+  "status": "Investigating"
+}
+
+### FAILURE: invalid status value. Expect 400 VALIDATION_ERROR.
+PATCH {{baseUrl}}/incidents/000000000000000000000000/status
+Content-Type: application/json
+
+{
+  "status": "Archived"
+}
+
+### Success: delete an incident (replace :id with a real id).
+DELETE {{baseUrl}}/incidents/000000000000000000000000
+
+### FAILURE: delete an unknown incident id. Expect 404 NOT_FOUND.
+DELETE {{baseUrl}}/incidents/000000000000000000000000
