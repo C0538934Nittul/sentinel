@@ -7,7 +7,7 @@
  *         the C++ binary, which is where the assessed logic lives).
  */
 
-import { execFile } from "node:child_process";
+import { execFile, type ExecFileException } from "node:child_process";
 import { env } from "../config/env.js";
 import { AnalyzerError } from "../middleware/errorHandler.js";
 import type { AnalyzerOutput } from "../types/incident.js";
@@ -71,7 +71,7 @@ export function runAnalyzer(events: SecurityEvent[]): Promise<AnalyzerOutput> {
   });
 }
 
-function mapAnalyzerFailure(error: NodeJS.ErrnoException & { code?: number | string }, stderr: string): AnalyzerError {
+function mapAnalyzerFailure(error: ExecFileException, stderr: string): AnalyzerError {
   const parsedStderr = tryParseStderr(stderr);
   const message = parsedStderr?.error?.message ?? error.message;
   const exitCode = typeof error.code === "number" ? error.code : undefined;

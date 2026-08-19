@@ -7,9 +7,9 @@
 import type { EventType, SecurityEvent } from "../types/securityEvent.js";
 
 export interface ListEventsFilter {
-  sourceIp?: string;
-  eventType?: EventType;
-  limit?: number;
+  sourceIp?: string | undefined;
+  eventType?: EventType | undefined;
+  limit?: number | undefined;
 }
 
 /**

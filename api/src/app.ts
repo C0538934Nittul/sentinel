@@ -11,7 +11,10 @@ import cors from "cors";
 import express, { type Express } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
-import pinoHttp from "pino-http";
+// Named import, not default -- pino-http's .d.ts uses ESM `export default` syntax over a
+// plain-CJS package with no "exports" field, which trips up NodeNext's default-import interop
+// (TS2349: "not callable"). The named export `pinoHttp` it also provides sidesteps that.
+import { pinoHttp } from "pino-http";
 import { env } from "./config/env.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
 import eventsRoutes from "./routes/events.routes.js";

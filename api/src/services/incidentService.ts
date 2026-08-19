@@ -8,8 +8,8 @@
 import type { Incident, IncidentStatus } from "../types/incident.js";
 
 export interface ListIncidentsFilter {
-  status?: IncidentStatus;
-  limit?: number;
+  status?: IncidentStatus | undefined;
+  limit?: number | undefined;
 }
 
 /**

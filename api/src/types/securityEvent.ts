@@ -19,9 +19,12 @@ export interface SecurityEvent {
   timestamp: string; // ISO 8601 UTC, millisecond precision
   eventType: EventType;
   sourceIp: string;
-  account?: string;
+  // `| undefined` (not just `?`) because Zod's .optional() produces `T | undefined` rather than
+  // omitting the key, and exactOptionalPropertyTypes distinguishes "absent" from "present as
+  // undefined" -- see docs/ASSUMPTIONS.md.
+  account?: string | undefined;
   host: string;
-  details?: Record<string, unknown>;
+  details?: Record<string, unknown> | undefined;
 }
 
 export interface SecurityEventFile {

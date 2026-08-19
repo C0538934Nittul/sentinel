@@ -40,3 +40,31 @@ AI-authored logic in this pass -- they remain `TODO(student)` throughout every p
   incidents on any input, which is expected and not a bug.
 - `.gitignore` -- added `*.log` after a stray `sentinel-analyzer.log` from a manual test run
   showed up as an untracked file at the repo root.
+
+## Phase 3 -- API typechecks and starts
+
+- `api/src/app.ts` -- switched `pino-http`'s import from default to named (`import {
+  pinoHttp }`) to work around a NodeNext/CJS-interop typecheck error (TS2349) in its
+  `.d.ts`. No behavior change.
+- `api/src/services/analyzerService.ts` -- replaced a hand-rolled error type with Node's own
+  `ExecFileException` (from `node:child_process`), fixing several typecheck errors caused by
+  `exactOptionalPropertyTypes` narrowing the hand-rolled type incorrectly. No logic changed.
+- `api/src/controllers/health.controller.ts` -- **implemented** (not left stubbed): reports
+  `mongoose.connection.readyState` and whether the analyzer binary exists at
+  `env.analyzerBinPath` via `fs.existsSync`. Treated as infra rather than assessed logic since
+  Phase 3's own acceptance criteria required a working health check. **Verify:** the
+  `mongo`/`analyzerBinaryFound` field names and the 200-with-degraded-body-instead-of-non-2xx
+  design choice.
+- `api/src/controllers/events.controller.ts`, `incidents.controller.ts` -- wired the
+  already-written Zod schemas to actually validate `req.query`/`req.params`/`req.body` and
+  `next(new ValidationError(...))` on failure; converted handlers to `async` with
+  `try/await/catch(next)` around the (still-stubbed) service calls to avoid unhandled promise
+  rejections. **The actual service calls remain `TODO(student)`/stubbed** -- only the
+  request-validation seam is real. **Verify:** this is boilerplate parsing, not business logic,
+  but confirm you're comfortable with where I judged that line to be.
+- `api/src/types/securityEvent.ts`, `api/src/services/eventService.ts`,
+  `api/src/services/incidentService.ts` -- widened optional field types from `field?: T` to
+  `field?: T | undefined` to satisfy `exactOptionalPropertyTypes: true` against Zod's
+  `.optional()` output. Pure type-level fix, no runtime behavior change.
+- `api/.env` created from `.env.example` with the values that match the Phase 2 build output
+  (`ANALYZER_BIN_PATH=analyzer/build/debug/sentinel-analyzer`). Not committed (gitignored).

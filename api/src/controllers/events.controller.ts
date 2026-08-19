@@ -1,11 +1,16 @@
 /**
- * Handlers for /v1/events. Zod request schemas are written in full; handler bodies are
- * stubbed (business logic lives in src/services/eventService.ts, also stubbed).
+ * Handlers for /v1/events. Zod request schemas are written in full and now wired up to
+ * validate incoming requests (Phase 3 -- boilerplate request parsing, not assessed logic).
+ * The subsequent call into src/services/eventService.ts is still stubbed, so a *valid* request
+ * currently surfaces a 500 ("not implemented") -- only the validation seam is real so far.
+ * Full CRUD wiring against MongoDB is Phase 5.
  * Component: api/src/controllers
  */
 
 import type { NextFunction, Request, Response } from "express";
 import { z } from "zod";
+import * as eventService from "../services/eventService.js";
+import { ValidationError } from "../middleware/errorHandler.js";
 import { EVENT_TYPES } from "../types/securityEvent.js";
 
 const securityEventSchema = z.object({
@@ -35,14 +40,20 @@ export const createEventsBodySchema = z.union([
  * Output: 200 SecurityEvent[]
  * Error cases: 400 if query params fail validation.
  */
-export function listEvents(req: Request, res: Response, next: NextFunction): void {
-  // TODO(student): parse req.query with listEventsQuerySchema, call
-  // eventService.listEvents(filter), respond 200 with the array. Pass validation failures and
-  // unexpected errors to next(err) for errorHandler to render.
-  void req;
-  void res;
-  void next;
-  throw new Error("events.controller.listEvents not implemented");
+export async function listEvents(req: Request, res: Response, next: NextFunction): Promise<void> {
+  const parsed = listEventsQuerySchema.safeParse(req.query);
+  if (!parsed.success) {
+    next(new ValidationError("Invalid query parameters", parsed.error.flatten()));
+    return;
+  }
+
+  try {
+    // TODO(student): eventService.listEvents is still stubbed -- this call currently rejects.
+    const events = await eventService.listEvents(parsed.data);
+    res.status(200).json(events);
+  } catch (err) {
+    next(err);
+  }
 }
 
 /**
@@ -51,11 +62,20 @@ export function listEvents(req: Request, res: Response, next: NextFunction): voi
  * Output: 201 SecurityEvent[] (the created events)
  * Error cases: 400 on schema validation failure, 409 if any eventId already exists.
  */
-export function createEvents(req: Request, res: Response, next: NextFunction): void {
-  // TODO(student): parse req.body with createEventsBodySchema, normalize to an array, call
-  // eventService.createEvents(events), respond 201 with the created events.
-  void req;
-  void res;
-  void next;
-  throw new Error("events.controller.createEvents not implemented");
+export async function createEvents(req: Request, res: Response, next: NextFunction): Promise<void> {
+  const parsed = createEventsBodySchema.safeParse(req.body);
+  if (!parsed.success) {
+    next(new ValidationError("Invalid event payload", parsed.error.flatten()));
+    return;
+  }
+
+  const events = "events" in parsed.data ? parsed.data.events : [parsed.data];
+
+  try {
+    // TODO(student): eventService.createEvents is still stubbed -- this call currently rejects.
+    const created = await eventService.createEvents(events);
+    res.status(201).json(created);
+  } catch (err) {
+    next(err);
+  }
 }
