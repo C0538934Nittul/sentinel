@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(lldb) Debug sentinel-analyzer -- authentication-attack.json",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/analyzer/build/debug/sentinel-analyzer",
+      "args": [
+        "--events",
+        "${workspaceFolder}/sample-data/authentication-attack.json",
+        "--config",
+        "${workspaceFolder}/config/rules.json",
+        "--pretty"
+      ],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "cmake-build",
+      "stopOnEntry": false
+    },
+    {
+      "name": "Node: Attach to API (--inspect)",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "restart": true,
+      "cwd": "${workspaceFolder}/api"
+    }
+  ]
+}

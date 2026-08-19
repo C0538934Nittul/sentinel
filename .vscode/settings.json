@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[cpp]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/analyzer/build/debug/compile_commands.json",
+  "cmake.sourceDirectory": "${workspaceFolder}/analyzer",
+  "cmake.buildDirectory": "${workspaceFolder}/analyzer/build/${buildType}"
+}
