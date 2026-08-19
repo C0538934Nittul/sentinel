@@ -1,0 +1,33 @@
+{
+  "$comment": "Detection rule configuration. See docs/data-contract.md and docs/ASSUMPTIONS.md. Nothing here is hard-coded in the C++ analyzer -- RuleFactory builds rule instances from this file.",
+  "analysisWindowSeconds": 300,
+  "rules": [
+    {
+      "id": "REPEATED_AUTH_FAILURE",
+      "description": "Ten or more failed authentication events from a single source IP within the configured window.",
+      "windowSeconds": 120,
+      "threshold": 10,
+      "severity": "HIGH",
+      "score": 80,
+      "enabled": true
+    },
+    {
+      "id": "SUCCESS_AFTER_FAILURES",
+      "description": "A successful authentication following five or more failures against the same account/source within the analysis window.",
+      "windowSeconds": 300,
+      "threshold": 5,
+      "severity": "HIGH",
+      "score": 90,
+      "enabled": true
+    },
+    {
+      "id": "MULTI_ACCOUNT_PROBE",
+      "description": "Failed authentication against five or more distinct accounts from a single source IP within the configured window.",
+      "windowSeconds": 180,
+      "threshold": 5,
+      "severity": "MEDIUM",
+      "score": 65,
+      "enabled": true
+    }
+  ]
+}
