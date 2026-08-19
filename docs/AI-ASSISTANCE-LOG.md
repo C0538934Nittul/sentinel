@@ -77,3 +77,47 @@ AI-authored logic in this pass -- they remain `TODO(student)` throughout every p
   `docs/ASSUMPTIONS.md`. No other client code changed -- typecheck, build, and all four routes
   (`/`, `/events`, `/incidents`, `/incidents/[id]`) worked on the first real attempt once
   dependencies installed.
+
+## Phase 5 -- First-draft implementations (C++)
+
+Everything below is a **first draft** per your own framing -- written to compile, pass its
+tests, and be readable, not presented as the final assessed answer. `RepeatedFailureRule`,
+`SuccessAfterFailuresRule`, `MultiAccountProbeRule` (`evaluate()`) and `ThreatAnalyzer::analyze`
+were **not** touched -- still `TODO(student)`, still throwing/returning `{}` as left in Phase 2.
+
+- `analyzer/src/SecurityEvent.cpp` -- implemented `fromJson`, `toString(EventType)`,
+  `eventTypeFromString`. Timestamp parsing uses a strict regex
+  (`^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$`) plus `std::chrono::year_month_day`/
+  `sys_days` for the calendar math -- deliberately avoided libc++'s `<chrono>` stream
+  parsing/formatting extensions, whose availability varies by platform. **Verify:** the
+  regex-then-chrono approach, and whether you want looser timestamp acceptance (e.g. no
+  trailing `Z`, non-UTC offsets) -- currently rejected.
+- `analyzer/include/sentinel/SecurityEvent.hpp` -- added `operator<` (by timestamp, tie-broken
+  by `eventId`) since it wasn't declared in Step 2 and the rule `evaluate()` methods will want
+  chronologically-sorted input. **Verify:** whether you'd rather sort in `EventReader` instead
+  of relying on caller-side sorting via this operator.
+- `analyzer/src/EventReader.cpp` -- implemented `readFromFile`/`readFromStream` with
+  **skip-and-log** semantics (bad events dropped + logged to stderr + summary count; file as a
+  whole still succeeds). Full reasoning and the fail-fast alternative are in
+  `docs/ASSUMPTIONS.md`. **Verify:** this is a real design decision, not a default -- read that
+  section before you build on it.
+- `analyzer/src/ConfigReader.cpp` -- implemented `readFromFile`: parses `analysisWindowSeconds`
+  and each `rules[]` entry, validates required fields and severity strings, throws `ConfigError`
+  with a message naming the offending rule id.
+- `analyzer/src/RuleFactory.cpp` -- implemented `buildRules`: maps each enabled `RuleConfig` to
+  its concrete rule class by `id` string, throws `ConfigError` for an unrecognized id.
+- `analyzer/src/IncidentResult.cpp` -- implemented `toJson()` matching
+  `docs/data-contract.md`'s incident-result shape exactly (field names, ISO 8601 millisecond
+  timestamp format).
+- `analyzer/src/Logger.cpp`, `include/sentinel/Logger.hpp` -- added stderr echoing alongside
+  the existing file output (was file-only in Step 2).
+- `analyzer/tests/test_SecurityEvent.cpp`, `test_IncidentResult.cpp`, `test_EventReader.cpp`,
+  `test_ConfigReader.cpp`, `test_RuleFactory.cpp`, `test_Logger.cpp` -- filled in with real
+  assertions against the above. Self-contained (temp files / in-memory JSON), not dependent on
+  `sample-data/` being reachable from `ctest`'s working directory.
+  `test_RepeatedFailureRule.cpp`, `test_SuccessAfterFailuresRule.cpp`,
+  `test_MultiAccountProbeRule.cpp`, `test_ThreatAnalyzer.cpp` were **left empty** as instructed
+  -- note `ThreatAnalyzer::addRule`/`ruleCount` do have real, testable (non-assessed) behavior
+  from Step 2 that I chose not to test here, erring toward leaving the whole file alone since
+  `ThreatAnalyzer::analyze` is explicitly on the "don't implement" list; say if you'd like those
+  ownership-only tests added.

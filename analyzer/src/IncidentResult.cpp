@@ -2,12 +2,40 @@
  * @file IncidentResult.cpp
  * @brief Implementation of IncidentResult.
  * @component analyzer (sentinel-core)
- * @status Constructor and accessors implemented (trivial). toJson() is stubbed -- TODO(student).
+ * @status Constructor and accessors implemented (trivial). toJson() first-draft implemented
+ *         (Step 3, Phase 5) -- not the final assessed version, review and rewrite as needed.
  */
 
 #include "sentinel/IncidentResult.hpp"
 
+#include <ctime>
+#include <iomanip>
+#include <sstream>
+
 namespace sentinel {
+
+namespace {
+
+// Mirrors Logger::timestampNow's approach -- manual formatting avoids relying on libc++'s
+// <chrono> streaming/format extensions, whose availability varies by platform/toolchain
+// version. Produces the same "YYYY-MM-DDTHH:MM:SS.mmmZ" shape SecurityEvent parses.
+std::string formatIso8601Utc(std::chrono::system_clock::time_point tp) {
+    using namespace std::chrono;
+    const auto ms = duration_cast<milliseconds>(tp.time_since_epoch()) % 1000;
+    const std::time_t t = system_clock::to_time_t(tp);
+    std::tm utcTm{};
+#if defined(_WIN32)
+    gmtime_s(&utcTm, &t);
+#else
+    gmtime_r(&t, &utcTm);
+#endif
+    std::ostringstream oss;
+    oss << std::put_time(&utcTm, "%Y-%m-%dT%H:%M:%S");
+    oss << '.' << std::setfill('0') << std::setw(3) << ms.count() << 'Z';
+    return oss.str();
+}
+
+}  // namespace
 
 std::string toString(Severity severity) {
     switch (severity) {
@@ -51,10 +79,16 @@ const std::vector<std::string>& IncidentResult::supportingEventIds() const noexc
 const std::string& IncidentResult::summary() const noexcept { return summary_; }
 
 nlohmann::json IncidentResult::toJson() const {
-    // TODO(student): serialize to the incident-result shape in docs/data-contract.md,
-    // formatting detectedAt_ as an ISO 8601 UTC string with millisecond precision and
-    // severity_ via toString(Severity). Omit incidentId/status -- the API assigns those.
-    throw std::logic_error("IncidentResult::toJson not implemented");
+    // Matches docs/data-contract.md's incident-result shape, excluding incidentId/status
+    // (assigned by the API at persistence time).
+    return nlohmann::json{
+        {"ruleId", ruleId_},
+        {"severity", toString(severity_)},
+        {"riskScore", riskScore_},
+        {"detectedAt", formatIso8601Utc(detectedAt_)},
+        {"supportingEventIds", supportingEventIds_},
+        {"summary", summary_},
+    };
 }
 
 }  // namespace sentinel

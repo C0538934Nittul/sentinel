@@ -1,6 +1,6 @@
 /**
  * @file Logger.hpp
- * @brief Minimal leveled logger writing to a diagnostic log file.
+ * @brief Minimal leveled logger writing to a diagnostic log file and echoing to stderr.
  * @component analyzer (sentinel-core)
  * @status Complete. Plumbing, not assessed logic -- implemented in full.
  */
@@ -17,7 +17,7 @@ enum class LogLevel { Debug, Info, Warn, Error };
 
 /**
  * @class Logger
- * @brief Appends leveled, timestamped lines to a log file.
+ * @brief Appends leveled, timestamped lines to a log file and to stderr.
  *
  * Deliberately not a singleton -- main.cpp owns one instance and passes it (or a reference)
  * to whatever needs it, keeping logging an explicit dependency rather than global state.

@@ -10,6 +10,7 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 
 #include "sentinel/SentinelException.hpp"
@@ -32,9 +33,15 @@ void Logger::write(LogLevel level, const std::string& message) {
     if (static_cast<int>(level) < static_cast<int>(minLevel_)) {
         return;
     }
+    const std::string line = "[" + timestampNow() + "] [" + levelName(level) + "] " + message;
+
     std::lock_guard<std::mutex> lock(mutex_);
-    file_ << "[" << timestampNow() << "] [" << levelName(level) << "] " << message << '\n';
+    file_ << line << '\n';
     file_.flush();
+    // Also echo to stderr (never stdout -- main.cpp reserves stdout for the JSON result the
+    // API pipes and parses) so log output is visible live during manual/debugger runs, not
+    // only after the fact in the log file.
+    std::cerr << line << '\n';
 }
 
 std::string Logger::levelName(LogLevel level) {

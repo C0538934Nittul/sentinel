@@ -67,6 +67,12 @@ public:
     [[nodiscard]] const std::string& host() const noexcept;
     [[nodiscard]] const nlohmann::json& details() const noexcept;
 
+    /**
+     * @brief Orders events by timestamp (ties broken by eventId for a stable, deterministic
+     *        order). Used to sort events chronologically before rule evaluation.
+     */
+    [[nodiscard]] bool operator<(const SecurityEvent& other) const noexcept;
+
     SecurityEvent(const SecurityEvent&) = default;
     SecurityEvent(SecurityEvent&&) = default;
     SecurityEvent& operator=(const SecurityEvent&) = default;

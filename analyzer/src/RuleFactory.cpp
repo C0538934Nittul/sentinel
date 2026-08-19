@@ -2,7 +2,8 @@
  * @file RuleFactory.cpp
  * @brief Implementation of RuleFactory.
  * @component analyzer (sentinel-core)
- * @status STUBBED -- TODO(student).
+ * @status First-draft implementation (Step 3, Phase 5). Not the final assessed version --
+ *         review and rewrite as needed.
  */
 
 #include "sentinel/RuleFactory.hpp"
@@ -15,15 +16,31 @@
 namespace sentinel {
 
 std::vector<std::unique_ptr<DetectionRule>> RuleFactory::buildRules(const AnalysisConfig& config) {
-    // TODO(student): for each enabled RuleConfig in config.rules, construct the matching
-    // concrete rule (RepeatedFailureRule for "REPEATED_AUTH_FAILURE",
-    // SuccessAfterFailuresRule for "SUCCESS_AFTER_FAILURES",
-    // MultiAccountProbeRule for "MULTI_ACCOUNT_PROBE") via std::make_unique, passing its
-    // threshold/window/severity/score from config. Throw ConfigError for an unrecognized id.
-    // Stubbed to a safe empty result rather than throwing -- see docs/ASSUMPTIONS.md. With
-    // ConfigReader also stubbed to return zero rules, this is also literally correct today.
-    (void)config;
-    return {};
+    std::vector<std::unique_ptr<DetectionRule>> rules;
+
+    for (const auto& ruleConfig : config.rules) {
+        if (!ruleConfig.enabled) {
+            continue;
+        }
+
+        if (ruleConfig.id == "REPEATED_AUTH_FAILURE") {
+            rules.push_back(std::make_unique<RepeatedFailureRule>(
+                ruleConfig.id, ruleConfig.windowSeconds, ruleConfig.threshold, ruleConfig.severity,
+                ruleConfig.score));
+        } else if (ruleConfig.id == "SUCCESS_AFTER_FAILURES") {
+            rules.push_back(std::make_unique<SuccessAfterFailuresRule>(
+                ruleConfig.id, ruleConfig.windowSeconds, ruleConfig.threshold, ruleConfig.severity,
+                ruleConfig.score));
+        } else if (ruleConfig.id == "MULTI_ACCOUNT_PROBE") {
+            rules.push_back(std::make_unique<MultiAccountProbeRule>(
+                ruleConfig.id, ruleConfig.windowSeconds, ruleConfig.threshold, ruleConfig.severity,
+                ruleConfig.score));
+        } else {
+            throw ConfigError("unrecognized rule id in config: " + ruleConfig.id);
+        }
+    }
+
+    return rules;
 }
 
 }  // namespace sentinel

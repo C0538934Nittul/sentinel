@@ -30,6 +30,31 @@ to revise, but revising it means touching multiple files, so it's collected in o
 - Field names: `windowSeconds`, `threshold`, `severity`, `score` — chosen to read naturally in
   both JSON and as C++ struct members.
 
+## EventReader: skip-and-log vs. fail-the-whole-file (Step 3, Phase 5)
+
+`EventReader::readFromStream` now has a real implementation. When an individual event in the
+`"events"` array fails `SecurityEvent::fromJson` validation, the chosen behavior is
+**skip-and-log**: the bad event is dropped, a one-line reason is written to stderr, and a
+summary count ("skipped N of M") is printed at the end. The file as a whole still succeeds and
+returns whatever valid events it found -- see `sample-data/malformed-events.json`, where all six
+deliberately-broken entries are skipped and the analyzer still exits 0 with zero events loaded.
+
+**Alternative considered:** fail the entire read on the first invalid event (throw
+`ValidationError` immediately, discard whatever was parsed so far). This would be stricter --
+appropriate if you want "any malformed input is a hard error" as a design principle, e.g. for
+an ingestion pipeline where partial/silent data loss is worse than a loud failure. The tradeoff:
+a single typo'd event in an otherwise-fine 10,000-event file would reject the whole batch. Given
+`malformed-events.json` is explicitly designed as a mixed bag of independent defects (see
+`sample-data/README.md`), skip-and-log seemed like the more useful default for this analyzer,
+but this is a genuine design choice, not an obviously-correct one -- revisit if your rubric or
+your own judgment favors fail-fast.
+
+The logging goes to stderr directly (not through a `Logger` instance) because
+`EventReader::readFromStream`'s signature takes no `Logger` parameter and Step 2's declared
+interface wasn't reopened for this -- see `analyzer/include/sentinel/EventReader.hpp`. If you
+want skipped-event details in the actual log file (not just stderr), the cleanest change is
+adding an optional `Logger*` parameter to both `readFromFile`/`readFromStream`.
+
 ## Stub return values (Step 3, Phase 2 -- getting to a green build)
 
 Before this pass, every stubbed method threw `std::logic_error("... not implemented")`. That
