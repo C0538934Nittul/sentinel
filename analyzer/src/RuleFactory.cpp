@@ -20,8 +20,10 @@ std::vector<std::unique_ptr<DetectionRule>> RuleFactory::buildRules(const Analys
     // SuccessAfterFailuresRule for "SUCCESS_AFTER_FAILURES",
     // MultiAccountProbeRule for "MULTI_ACCOUNT_PROBE") via std::make_unique, passing its
     // threshold/window/severity/score from config. Throw ConfigError for an unrecognized id.
+    // Stubbed to a safe empty result rather than throwing -- see docs/ASSUMPTIONS.md. With
+    // ConfigReader also stubbed to return zero rules, this is also literally correct today.
     (void)config;
-    throw std::logic_error("RuleFactory::buildRules not implemented");
+    return {};
 }
 
 }  // namespace sentinel

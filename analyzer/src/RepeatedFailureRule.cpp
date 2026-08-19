@@ -22,6 +22,10 @@ std::vector<IncidentResult> RepeatedFailureRule::evaluate(
     // group's timestamps, and emit one IncidentResult per source IP/window that reaches
     // threshold_ within window_. events is chronologically ordered on input.
     (void)events;
+    // window_/threshold_ are read here only to silence -Wunused-private-field until evaluate()
+    // is implemented -- they're genuinely consumed by the assessed logic once it exists.
+    (void)window_;
+    (void)threshold_;
     throw std::logic_error("RepeatedFailureRule::evaluate not implemented");
 }
 

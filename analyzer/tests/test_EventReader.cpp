@@ -2,8 +2,8 @@
  * @file test_EventReader.cpp
  * @brief Test checklist for EventReader file/stream loading.
  * @component analyzer/tests
- * @status Empty TEST_CASE bodies. Use sample-data/*.json (especially malformed-events.json) as
- *         fixtures once file-based fixtures are wired up.
+ * @status Empty TEST_CASE bodies. Use the JSON files under sample-data/ (especially
+ *         malformed-events.json) as fixtures once file-based fixtures are wired up.
  */
 
 #include <catch2/catch_test_macros.hpp>

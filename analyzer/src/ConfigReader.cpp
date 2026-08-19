@@ -16,11 +16,20 @@
 namespace sentinel {
 
 AnalysisConfig ConfigReader::readFromFile(const std::string& path) {
-    // TODO(student): open and parse the file (FileError / ParseError as appropriate), then
-    // validate and map each entry in "rules" to a RuleConfig -- including parsing the
-    // "severity" string into the Severity enum and rejecting unknown values with ConfigError.
-    (void)path;
-    throw std::logic_error("ConfigReader::readFromFile not implemented");
+    // File-open check is real (infra, not assessed logic).
+    std::ifstream file(path);
+    if (!file.is_open()) {
+        throw FileError("could not open config file: " + path);
+    }
+
+    // TODO(student): parse the file as JSON (ParseError on malformed JSON), then validate and
+    // map each entry in "rules" to a RuleConfig -- including parsing the "severity" string into
+    // the Severity enum and rejecting unknown values with ConfigError.
+    //
+    // Stubbed to a safe default (the top-level analysisWindowSeconds from config/rules.json,
+    // zero rules) for now rather than throwing, so RuleFactory/ThreatAnalyzer are exercisable
+    // end-to-end before this is implemented -- see docs/ASSUMPTIONS.md.
+    return AnalysisConfig{std::chrono::seconds(300), {}};
 }
 
 }  // namespace sentinel

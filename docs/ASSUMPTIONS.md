@@ -30,6 +30,30 @@ to revise, but revising it means touching multiple files, so it's collected in o
 - Field names: `windowSeconds`, `threshold`, `severity`, `score` — chosen to read naturally in
   both JSON and as C++ struct members.
 
+## Stub return values (Step 3, Phase 2 -- getting to a green build)
+
+Before this pass, every stubbed method threw `std::logic_error("... not implemented")`. That
+made the binary fail loudly on any real path, but also meant `sentinel-analyzer --events
+sample-data/normal-events.json --config config/rules.json` couldn't exit 0 the way a smoke test
+needs it to, since the call chain (`ConfigReader` -> `RuleFactory` -> `ThreatAnalyzer::analyze`)
+runs through several stubs even on an empty/trivial input.
+
+Changed: `EventReader::readFromFile`/`ConfigReader::readFromFile` now do a **real** file-open
+check (throw `FileError` on a missing path -- this is infra, not assessed logic) but then return
+a safe empty/default value instead of parsing; `EventReader::readFromStream`,
+`RuleFactory::buildRules`, and `ThreatAnalyzer::analyze` return an empty result (`{}`) instead of
+throwing. `SecurityEvent::fromJson`, `IncidentResult::toJson`, and the three rules' `evaluate()`
+bodies are untouched (still throw `std::logic_error`) since nothing in the current smoke-test
+path calls them yet.
+
+This means the *current* end-to-end run is a no-op that proves the pipeline is wired correctly,
+not that it does anything -- zero events in, zero rules built, zero incidents out, exit 0. Once
+`EventReader`/`ConfigReader` gain real parsing (Phase 5), they'll actually populate `events` and
+`config.rules`, at which point `RuleFactory` and `ThreatAnalyzer::analyze` need to move off the
+empty-stub return too (`RuleFactory` gets implemented in Phase 5; `ThreatAnalyzer::analyze`
+stays a stub by design -- see the "Do not implement these four" list -- so it will keep
+returning `{}` even once rules exist, until you implement it yourself).
+
 ## C++ analyzer
 
 - Used `nlohmann::json` (header-only, FetchContent) rather than a hand-rolled parser — standard

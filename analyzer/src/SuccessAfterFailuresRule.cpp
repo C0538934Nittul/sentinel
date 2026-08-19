@@ -23,6 +23,10 @@ std::vector<IncidentResult> SuccessAfterFailuresRule::evaluate(
     // count reaches threshold_, emit an IncidentResult referencing the success event plus the
     // qualifying failures as supporting events.
     (void)events;
+    // window_/threshold_ are read here only to silence -Wunused-private-field until evaluate()
+    // is implemented -- they're genuinely consumed by the assessed logic once it exists.
+    (void)window_;
+    (void)threshold_;
     throw std::logic_error("SuccessAfterFailuresRule::evaluate not implemented");
 }
 

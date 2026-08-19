@@ -22,6 +22,10 @@ std::vector<IncidentResult> MultiAccountProbeRule::evaluate(
     // targeted within a sliding window_, and emit an IncidentResult when the distinct-account
     // count reaches threshold_.
     (void)events;
+    // window_/threshold_ are read here only to silence -Wunused-private-field until evaluate()
+    // is implemented -- they're genuinely consumed by the assessed logic once it exists.
+    (void)window_;
+    (void)threshold_;
     throw std::logic_error("MultiAccountProbeRule::evaluate not implemented");
 }
 
