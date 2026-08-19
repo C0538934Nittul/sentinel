@@ -1,0 +1,453 @@
+{
+  "events": [
+    {
+      "eventId": "evt-normal-001",
+      "timestamp": "2026-03-01T10:00:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "workstation-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-032",
+      "timestamp": "2026-03-01T10:00:50.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "workstation-01",
+      "details": {
+        "path": "/var/data/report-0.csv",
+        "operation": "read"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-002",
+      "timestamp": "2026-03-01T10:01:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-003",
+      "timestamp": "2026-03-01T10:03:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.13",
+      "host": "workstation-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "mchen"
+    },
+    {
+      "eventId": "evt-normal-033",
+      "timestamp": "2026-03-01T10:03:00.000Z",
+      "eventType": "PROCESS_START",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-02",
+      "details": {
+        "processName": "backup-agent",
+        "pid": 4001
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-027",
+      "timestamp": "2026-03-01T10:03:20.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.11",
+      "host": "workstation-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-004",
+      "timestamp": "2026-03-01T10:04:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.14",
+      "host": "laptop-07",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "rpatel"
+    },
+    {
+      "eventId": "evt-normal-034",
+      "timestamp": "2026-03-01T10:05:10.000Z",
+      "eventType": "NETWORK_CONNECTION",
+      "sourceIp": "203.0.113.13",
+      "host": "workstation-03",
+      "details": {
+        "destinationIp": "203.0.113.200",
+        "destinationPort": 443,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "eventId": "evt-normal-005",
+      "timestamp": "2026-03-01T10:06:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "server-db-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "kwilson"
+    },
+    {
+      "eventId": "evt-normal-035",
+      "timestamp": "2026-03-01T10:07:20.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.14",
+      "host": "laptop-07",
+      "details": {
+        "path": "/var/data/report-3.csv",
+        "operation": "read"
+      },
+      "account": "rpatel"
+    },
+    {
+      "eventId": "evt-normal-006",
+      "timestamp": "2026-03-01T10:07:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-007",
+      "timestamp": "2026-03-01T10:09:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.13",
+      "host": "workstation-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-036",
+      "timestamp": "2026-03-01T10:09:30.000Z",
+      "eventType": "PROCESS_START",
+      "sourceIp": "203.0.113.11",
+      "host": "server-db-01",
+      "details": {
+        "processName": "backup-agent",
+        "pid": 4004
+      },
+      "account": "kwilson"
+    },
+    {
+      "eventId": "evt-normal-008",
+      "timestamp": "2026-03-01T10:10:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.14",
+      "host": "workstation-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "mchen"
+    },
+    {
+      "eventId": "evt-normal-037",
+      "timestamp": "2026-03-01T10:11:40.000Z",
+      "eventType": "NETWORK_CONNECTION",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-01",
+      "details": {
+        "destinationIp": "203.0.113.200",
+        "destinationPort": 443,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "eventId": "evt-normal-009",
+      "timestamp": "2026-03-01T10:12:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "laptop-07",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "rpatel"
+    },
+    {
+      "eventId": "evt-normal-010",
+      "timestamp": "2026-03-01T10:13:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.12",
+      "host": "server-db-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "kwilson"
+    },
+    {
+      "eventId": "evt-normal-038",
+      "timestamp": "2026-03-01T10:13:50.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.13",
+      "host": "workstation-02",
+      "details": {
+        "path": "/var/data/report-6.csv",
+        "operation": "read"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-028",
+      "timestamp": "2026-03-01T10:14:10.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-011",
+      "timestamp": "2026-03-01T10:15:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.13",
+      "host": "workstation-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-039",
+      "timestamp": "2026-03-01T10:16:00.000Z",
+      "eventType": "PROCESS_START",
+      "sourceIp": "203.0.113.14",
+      "host": "workstation-03",
+      "details": {
+        "processName": "backup-agent",
+        "pid": 4007
+      },
+      "account": "mchen"
+    },
+    {
+      "eventId": "evt-normal-012",
+      "timestamp": "2026-03-01T10:16:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.14",
+      "host": "workstation-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-013",
+      "timestamp": "2026-03-01T10:18:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "workstation-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "mchen"
+    },
+    {
+      "eventId": "evt-normal-040",
+      "timestamp": "2026-03-01T10:18:10.000Z",
+      "eventType": "NETWORK_CONNECTION",
+      "sourceIp": "203.0.113.11",
+      "host": "laptop-07",
+      "details": {
+        "destinationIp": "203.0.113.200",
+        "destinationPort": 443,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "eventId": "evt-normal-014",
+      "timestamp": "2026-03-01T10:19:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.12",
+      "host": "laptop-07",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "rpatel"
+    },
+    {
+      "eventId": "evt-normal-015",
+      "timestamp": "2026-03-01T10:21:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.13",
+      "host": "server-db-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "kwilson"
+    },
+    {
+      "eventId": "evt-normal-016",
+      "timestamp": "2026-03-01T10:22:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.14",
+      "host": "workstation-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-017",
+      "timestamp": "2026-03-01T10:24:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "workstation-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-029",
+      "timestamp": "2026-03-01T10:25:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.13",
+      "host": "workstation-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "mchen"
+    },
+    {
+      "eventId": "evt-normal-018",
+      "timestamp": "2026-03-01T10:25:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "mchen"
+    },
+    {
+      "eventId": "evt-normal-019",
+      "timestamp": "2026-03-01T10:27:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.13",
+      "host": "laptop-07",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "rpatel"
+    },
+    {
+      "eventId": "evt-normal-020",
+      "timestamp": "2026-03-01T10:28:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.14",
+      "host": "server-db-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "kwilson"
+    },
+    {
+      "eventId": "evt-normal-021",
+      "timestamp": "2026-03-01T10:30:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "workstation-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-022",
+      "timestamp": "2026-03-01T10:31:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-normal-023",
+      "timestamp": "2026-03-01T10:33:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.13",
+      "host": "workstation-03",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "mchen"
+    },
+    {
+      "eventId": "evt-normal-024",
+      "timestamp": "2026-03-01T10:34:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.14",
+      "host": "laptop-07",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "rpatel"
+    },
+    {
+      "eventId": "evt-normal-030",
+      "timestamp": "2026-03-01T10:35:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.14",
+      "host": "laptop-07",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "rpatel"
+    },
+    {
+      "eventId": "evt-normal-025",
+      "timestamp": "2026-03-01T10:36:00.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.11",
+      "host": "server-db-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "kwilson"
+    },
+    {
+      "eventId": "evt-normal-026",
+      "timestamp": "2026-03-01T10:37:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.12",
+      "host": "workstation-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jdoe"
+    },
+    {
+      "eventId": "evt-normal-031",
+      "timestamp": "2026-03-01T10:44:10.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.11",
+      "host": "server-db-01",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "kwilson"
+    }
+  ]
+}

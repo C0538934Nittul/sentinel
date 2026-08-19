@@ -1,0 +1,81 @@
+{
+  "events": [
+    {
+      "eventId": "evt-probe-001",
+      "timestamp": "2026-03-01T10:00:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.70",
+      "host": "mail-gateway-01",
+      "details": {
+        "method": "imap"
+      },
+      "account": "acct01"
+    },
+    {
+      "eventId": "evt-probe-002",
+      "timestamp": "2026-03-01T10:00:20.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.70",
+      "host": "mail-gateway-01",
+      "details": {
+        "method": "imap"
+      },
+      "account": "acct02"
+    },
+    {
+      "eventId": "evt-probe-003",
+      "timestamp": "2026-03-01T10:00:40.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.70",
+      "host": "mail-gateway-01",
+      "details": {
+        "method": "imap"
+      },
+      "account": "acct03"
+    },
+    {
+      "eventId": "evt-probe-004",
+      "timestamp": "2026-03-01T10:01:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.70",
+      "host": "mail-gateway-01",
+      "details": {
+        "method": "imap"
+      },
+      "account": "acct04"
+    },
+    {
+      "eventId": "evt-probe-005",
+      "timestamp": "2026-03-01T10:01:20.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.70",
+      "host": "mail-gateway-01",
+      "details": {
+        "method": "imap"
+      },
+      "account": "acct05"
+    },
+    {
+      "eventId": "evt-probe-006",
+      "timestamp": "2026-03-01T10:01:40.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.70",
+      "host": "mail-gateway-01",
+      "details": {
+        "method": "imap"
+      },
+      "account": "acct06"
+    },
+    {
+      "eventId": "evt-probe-007",
+      "timestamp": "2026-03-01T10:02:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.70",
+      "host": "mail-gateway-01",
+      "details": {
+        "method": "imap"
+      },
+      "account": "acct07"
+    }
+  ]
+}

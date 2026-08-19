@@ -1,0 +1,81 @@
+{
+  "events": [
+    {
+      "eventId": "evt-saf-001",
+      "timestamp": "2026-03-01T10:00:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.60",
+      "host": "workstation-03",
+      "details": {
+        "method": "web"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-saf-002",
+      "timestamp": "2026-03-01T10:00:05.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.60",
+      "host": "workstation-03",
+      "details": {
+        "method": "web"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-saf-003",
+      "timestamp": "2026-03-01T10:00:10.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.60",
+      "host": "workstation-03",
+      "details": {
+        "method": "web"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-saf-004",
+      "timestamp": "2026-03-01T10:00:15.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.60",
+      "host": "workstation-03",
+      "details": {
+        "method": "web"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-saf-005",
+      "timestamp": "2026-03-01T10:00:20.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.60",
+      "host": "workstation-03",
+      "details": {
+        "method": "web"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-saf-006",
+      "timestamp": "2026-03-01T10:00:25.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.60",
+      "host": "workstation-03",
+      "details": {
+        "method": "web"
+      },
+      "account": "asmith"
+    },
+    {
+      "eventId": "evt-saf-007",
+      "timestamp": "2026-03-01T10:01:25.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.60",
+      "host": "workstation-03",
+      "details": {
+        "method": "web"
+      },
+      "account": "asmith"
+    }
+  ]
+}

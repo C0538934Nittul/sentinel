@@ -1,0 +1,748 @@
+{
+  "events": [
+    {
+      "eventId": "evt-mixed-001",
+      "timestamp": "2026-03-01T10:00:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-0.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-002",
+      "timestamp": "2026-03-01T10:01:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-003",
+      "timestamp": "2026-03-01T10:02:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-004",
+      "timestamp": "2026-03-01T10:03:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-005",
+      "timestamp": "2026-03-01T10:05:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-4.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-006",
+      "timestamp": "2026-03-01T10:06:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-039",
+      "timestamp": "2026-03-01T10:06:40.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-040",
+      "timestamp": "2026-03-01T10:06:50.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-041",
+      "timestamp": "2026-03-01T10:07:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-042",
+      "timestamp": "2026-03-01T10:07:10.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-043",
+      "timestamp": "2026-03-01T10:07:20.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-007",
+      "timestamp": "2026-03-01T10:07:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-044",
+      "timestamp": "2026-03-01T10:07:30.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-045",
+      "timestamp": "2026-03-01T10:07:40.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-046",
+      "timestamp": "2026-03-01T10:07:50.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-047",
+      "timestamp": "2026-03-01T10:08:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-048",
+      "timestamp": "2026-03-01T10:08:10.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.80",
+      "host": "vpn-gateway-01",
+      "details": {
+        "method": "vpn"
+      },
+      "account": "guest"
+    },
+    {
+      "eventId": "evt-mixed-008",
+      "timestamp": "2026-03-01T10:08:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-009",
+      "timestamp": "2026-03-01T10:10:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-8.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-010",
+      "timestamp": "2026-03-01T10:11:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-011",
+      "timestamp": "2026-03-01T10:12:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-012",
+      "timestamp": "2026-03-01T10:13:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-013",
+      "timestamp": "2026-03-01T10:15:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-12.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-014",
+      "timestamp": "2026-03-01T10:16:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-015",
+      "timestamp": "2026-03-01T10:17:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-016",
+      "timestamp": "2026-03-01T10:18:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-017",
+      "timestamp": "2026-03-01T10:20:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-16.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-018",
+      "timestamp": "2026-03-01T10:21:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-019",
+      "timestamp": "2026-03-01T10:22:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-020",
+      "timestamp": "2026-03-01T10:23:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-021",
+      "timestamp": "2026-03-01T10:25:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-20.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-022",
+      "timestamp": "2026-03-01T10:26:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-023",
+      "timestamp": "2026-03-01T10:27:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-024",
+      "timestamp": "2026-03-01T10:28:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-025",
+      "timestamp": "2026-03-01T10:30:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-24.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-049",
+      "timestamp": "2026-03-01T10:30:00.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.90",
+      "host": "mail-gateway-02",
+      "details": {
+        "method": "imap"
+      },
+      "account": "svc01"
+    },
+    {
+      "eventId": "evt-mixed-050",
+      "timestamp": "2026-03-01T10:30:25.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.90",
+      "host": "mail-gateway-02",
+      "details": {
+        "method": "imap"
+      },
+      "account": "svc02"
+    },
+    {
+      "eventId": "evt-mixed-051",
+      "timestamp": "2026-03-01T10:30:50.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.90",
+      "host": "mail-gateway-02",
+      "details": {
+        "method": "imap"
+      },
+      "account": "svc03"
+    },
+    {
+      "eventId": "evt-mixed-026",
+      "timestamp": "2026-03-01T10:31:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-052",
+      "timestamp": "2026-03-01T10:31:15.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.90",
+      "host": "mail-gateway-02",
+      "details": {
+        "method": "imap"
+      },
+      "account": "svc04"
+    },
+    {
+      "eventId": "evt-mixed-053",
+      "timestamp": "2026-03-01T10:31:40.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.90",
+      "host": "mail-gateway-02",
+      "details": {
+        "method": "imap"
+      },
+      "account": "svc05"
+    },
+    {
+      "eventId": "evt-mixed-054",
+      "timestamp": "2026-03-01T10:32:05.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.90",
+      "host": "mail-gateway-02",
+      "details": {
+        "method": "imap"
+      },
+      "account": "svc06"
+    },
+    {
+      "eventId": "evt-mixed-027",
+      "timestamp": "2026-03-01T10:32:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-028",
+      "timestamp": "2026-03-01T10:33:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-029",
+      "timestamp": "2026-03-01T10:35:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-28.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-030",
+      "timestamp": "2026-03-01T10:36:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-031",
+      "timestamp": "2026-03-01T10:37:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-032",
+      "timestamp": "2026-03-01T10:38:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-033",
+      "timestamp": "2026-03-01T10:40:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-32.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-034",
+      "timestamp": "2026-03-01T10:41:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-035",
+      "timestamp": "2026-03-01T10:42:30.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-055",
+      "timestamp": "2026-03-01T10:43:20.000Z",
+      "eventType": "PROCESS_START",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-21",
+      "details": {
+        "processName": "update-agent",
+        "pid": 5000
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-036",
+      "timestamp": "2026-03-01T10:43:45.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-056",
+      "timestamp": "2026-03-01T10:44:20.000Z",
+      "eventType": "NETWORK_CONNECTION",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-22",
+      "details": {
+        "destinationIp": "203.0.113.201",
+        "destinationPort": 443,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "eventId": "evt-mixed-037",
+      "timestamp": "2026-03-01T10:45:00.000Z",
+      "eventType": "FILE_ACCESS",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-21",
+      "details": {
+        "path": "/srv/logs/app-36.log",
+        "operation": "read"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-057",
+      "timestamp": "2026-03-01T10:45:20.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "laptop-30",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-038",
+      "timestamp": "2026-03-01T10:46:15.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-058",
+      "timestamp": "2026-03-01T10:46:20.000Z",
+      "eventType": "PROCESS_START",
+      "sourceIp": "203.0.113.101",
+      "host": "server-app-02",
+      "details": {
+        "processName": "update-agent",
+        "pid": 5003
+      },
+      "account": "jsingh"
+    },
+    {
+      "eventId": "evt-mixed-059",
+      "timestamp": "2026-03-01T10:47:20.000Z",
+      "eventType": "NETWORK_CONNECTION",
+      "sourceIp": "203.0.113.102",
+      "host": "workstation-21",
+      "details": {
+        "destinationIp": "203.0.113.201",
+        "destinationPort": 443,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "eventId": "evt-mixed-060",
+      "timestamp": "2026-03-01T10:48:20.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-22",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-061",
+      "timestamp": "2026-03-01T10:49:20.000Z",
+      "eventType": "PROCESS_START",
+      "sourceIp": "203.0.113.101",
+      "host": "laptop-30",
+      "details": {
+        "processName": "update-agent",
+        "pid": 5006
+      },
+      "account": "hgarcia"
+    },
+    {
+      "eventId": "evt-mixed-062",
+      "timestamp": "2026-03-01T10:50:20.000Z",
+      "eventType": "NETWORK_CONNECTION",
+      "sourceIp": "203.0.113.102",
+      "host": "server-app-02",
+      "details": {
+        "destinationIp": "203.0.113.201",
+        "destinationPort": 443,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "eventId": "evt-mixed-063",
+      "timestamp": "2026-03-01T10:51:20.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "workstation-21",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "tlee"
+    },
+    {
+      "eventId": "evt-mixed-064",
+      "timestamp": "2026-03-01T10:52:20.000Z",
+      "eventType": "PROCESS_START",
+      "sourceIp": "203.0.113.101",
+      "host": "workstation-22",
+      "details": {
+        "processName": "update-agent",
+        "pid": 5009
+      },
+      "account": "bnguyen"
+    },
+    {
+      "eventId": "evt-mixed-065",
+      "timestamp": "2026-03-01T10:53:20.000Z",
+      "eventType": "NETWORK_CONNECTION",
+      "sourceIp": "203.0.113.102",
+      "host": "laptop-30",
+      "details": {
+        "destinationIp": "203.0.113.201",
+        "destinationPort": 443,
+        "protocol": "tcp"
+      }
+    },
+    {
+      "eventId": "evt-mixed-066",
+      "timestamp": "2026-03-01T10:54:20.000Z",
+      "eventType": "AUTH_SUCCESS",
+      "sourceIp": "203.0.113.103",
+      "host": "server-app-02",
+      "details": {
+        "method": "ssh"
+      },
+      "account": "jsingh"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "events": [
+    {
+      "eventId": "evt-bad-001",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.99",
+      "host": "workstation-99",
+      "account": "baduser",
+      "details": {
+        "method": "ssh"
+      }
+    },
+    {
+      "eventId": "evt-bad-002",
+      "timestamp": "not-a-real-timestamp",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.99",
+      "host": "workstation-99",
+      "account": "baduser",
+      "details": {
+        "method": "ssh"
+      }
+    },
+    {
+      "eventId": "evt-bad-003",
+      "timestamp": "2026-03-01T10:00:00.000Z",
+      "eventType": "TELEPORT_DETECTED",
+      "sourceIp": "203.0.113.99",
+      "host": "workstation-99",
+      "details": {}
+    },
+    {
+      "eventId": "evt-bad-004",
+      "timestamp": "2026-03-01T10:00:01.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": 203011399,
+      "host": "workstation-99",
+      "account": "baduser",
+      "details": {
+        "method": "ssh"
+      }
+    },
+    {},
+    {
+      "eventId": "evt-bad-006",
+      "timestamp": "2026-03-01T10:00:02.000Z",
+      "eventType": "AUTH_FAILURE",
+      "sourceIp": "203.0.113.99",
+      "host": null,
+      "account": "baduser",
+      "details": {
+        "method": "ssh"
+      }
+    }
+  ]
+}
