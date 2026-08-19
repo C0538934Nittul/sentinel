@@ -2,9 +2,15 @@
  * Business logic for incidents: listing, lookup, status updates, deletion, and triggering
  * analysis runs.
  * Component: api/src/services
- * Status: STUBBED -- signatures and contracts only. Bodies are TODO(student).
+ * Status: First-draft implementation (Step 3, Phase 5) against MongoDB via Mongoose. Not the
+ *         final assessed version -- review and rewrite as needed.
  */
 
+import { isValidObjectId } from "mongoose";
+import { IncidentModel } from "../models/Incident.js";
+import { NotFoundError } from "../middleware/errorHandler.js";
+import { runAnalyzer } from "./analyzerService.js";
+import * as eventService from "./eventService.js";
 import type { Incident, IncidentStatus } from "../types/incident.js";
 
 export interface ListIncidentsFilter {
@@ -16,9 +22,15 @@ export interface ListIncidentsFilter {
  * List persisted incidents, optionally filtered by status.
  */
 export async function listIncidents(filter: ListIncidentsFilter = {}): Promise<Incident[]> {
-  // TODO(student): query IncidentModel using `filter`, most recent detectedAt first.
-  void filter;
-  throw new Error("incidentService.listIncidents not implemented");
+  const query: Record<string, unknown> = {};
+  if (filter.status) query.status = filter.status;
+
+  const documents = await IncidentModel.find(query)
+    .sort({ detectedAt: -1 })
+    .limit(filter.limit ?? 100)
+    .exec();
+
+  return documents.map((doc) => doc.toJSON() as unknown as Incident);
 }
 
 /**
@@ -26,10 +38,14 @@ export async function listIncidents(filter: ListIncidentsFilter = {}): Promise<I
  * @throws NotFoundError if no incident with that id exists.
  */
 export async function getIncidentById(id: string): Promise<Incident> {
-  // TODO(student): look up by _id, throw NotFoundError if missing or if `id` is not a valid
-  // ObjectId shape.
-  void id;
-  throw new Error("incidentService.getIncidentById not implemented");
+  if (!isValidObjectId(id)) {
+    throw new NotFoundError(`No incident with id ${id}`);
+  }
+  const document = await IncidentModel.findById(id).exec();
+  if (!document) {
+    throw new NotFoundError(`No incident with id ${id}`);
+  }
+  return document.toJSON() as unknown as Incident;
 }
 
 /**
@@ -38,10 +54,29 @@ export async function getIncidentById(id: string): Promise<Incident> {
  * @throws AnalyzerError if the analyzer process fails (propagated from analyzerService).
  */
 export async function analyzeAndPersist(): Promise<Incident[]> {
-  // TODO(student): load events via eventService.listEvents(), call
-  // analyzerService.runAnalyzer(events), map each AnalyzerIncident to an IncidentModel
-  // document (default status "Open"), persist, and return the created incidents.
-  throw new Error("incidentService.analyzeAndPersist not implemented");
+  // "All" events for analysis, not the default page-sized 100 the GET /v1/events endpoint
+  // uses -- see docs/ASSUMPTIONS.md.
+  const events = await eventService.listEvents({ limit: 100_000 });
+
+  const analyzerOutput = await runAnalyzer(events);
+
+  if (analyzerOutput.incidents.length === 0) {
+    return [];
+  }
+
+  const created = await IncidentModel.insertMany(
+    analyzerOutput.incidents.map((incident) => ({
+      ruleId: incident.ruleId,
+      severity: incident.severity,
+      riskScore: incident.riskScore,
+      detectedAt: incident.detectedAt,
+      supportingEventIds: incident.supportingEventIds,
+      summary: incident.summary,
+      status: "Open" as const,
+    })),
+  );
+
+  return created.map((doc) => doc.toJSON() as unknown as Incident);
 }
 
 /**
@@ -50,11 +85,14 @@ export async function analyzeAndPersist(): Promise<Incident[]> {
  * @throws ValidationError if `status` is not a recognized IncidentStatus.
  */
 export async function updateIncidentStatus(id: string, status: IncidentStatus): Promise<Incident> {
-  // TODO(student): update IncidentModel by id, returning the updated document. Throw
-  // NotFoundError if nothing matched.
-  void id;
-  void status;
-  throw new Error("incidentService.updateIncidentStatus not implemented");
+  if (!isValidObjectId(id)) {
+    throw new NotFoundError(`No incident with id ${id}`);
+  }
+  const document = await IncidentModel.findByIdAndUpdate(id, { status }, { new: true }).exec();
+  if (!document) {
+    throw new NotFoundError(`No incident with id ${id}`);
+  }
+  return document.toJSON() as unknown as Incident;
 }
 
 /**
@@ -62,7 +100,11 @@ export async function updateIncidentStatus(id: string, status: IncidentStatus): 
  * @throws NotFoundError if no incident with that id exists.
  */
 export async function deleteIncident(id: string): Promise<void> {
-  // TODO(student): delete by id via IncidentModel, throw NotFoundError if nothing matched.
-  void id;
-  throw new Error("incidentService.deleteIncident not implemented");
+  if (!isValidObjectId(id)) {
+    throw new NotFoundError(`No incident with id ${id}`);
+  }
+  const document = await IncidentModel.findByIdAndDelete(id).exec();
+  if (!document) {
+    throw new NotFoundError(`No incident with id ${id}`);
+  }
 }

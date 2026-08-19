@@ -121,3 +121,34 @@ were **not** touched -- still `TODO(student)`, still throwing/returning `{}` as 
   from Step 2 that I chose not to test here, erring toward leaving the whole file alone since
   `ThreatAnalyzer::analyze` is explicitly on the "don't implement" list; say if you'd like those
   ownership-only tests added.
+
+## Phase 5 -- First-draft implementations (API)
+
+- `api/src/services/eventService.ts` -- implemented `listEvents` (Mongoose `.find()` with
+  optional `sourceIp`/`eventType` filters, sorted newest-first, default limit 100) and
+  `createEvents` (`insertMany`, catching Mongo's duplicate-key error code 11000 and re-throwing
+  as `ConflictError` with the offending `eventId`s).
+- `api/src/services/incidentService.ts` -- implemented all five functions. `analyzeAndPersist`
+  loads events via `eventService.listEvents({ limit: 100_000 })` (see **Verify** note below),
+  calls the existing `analyzerService.runAnalyzer`, and persists whatever incidents come back
+  (currently always zero, since `ThreatAnalyzer::analyze` is still a stub -- this is expected).
+  `getIncidentById`/`updateIncidentStatus`/`deleteIncident` validate the id is a well-formed
+  Mongo ObjectId before querying (`isValidObjectId`), throwing `NotFoundError` either way rather
+  than letting a malformed id reach Mongoose as a cast error.
+- `api/src/controllers/events.controller.ts`, `incidents.controller.ts` -- removed the
+  now-stale "still stubbed" `TODO(student)` comments left over from Phase 3, since the service
+  calls they annotate now actually work. No other controller logic changed.
+- `api/src/models/SecurityEvent.ts` -- **bug fix**: removed a duplicate index definition on
+  `eventId` (both `unique: true` on the field and an explicit `.index({eventId:1},{unique:
+  true})` call declared the same index; Mongoose warned about it at startup). Kept the
+  field-level `unique: true`, removed the redundant explicit call.
+- **Verify:** `analyzeAndPersist`'s `{ limit: 100_000 }` is a placeholder way to say "all
+  events" without a dedicated "fetch everything" service function -- fine for coursework scale,
+  but worth a real pagination/streaming approach if this were closer to production.
+- **End-to-end verified live** (not just typechecked): POST'd all 12 events from
+  `sample-data/authentication-attack.json`, confirmed GET returns them, confirmed a duplicate
+  `eventId` POST returns 409, confirmed `POST /v1/incidents/analyze` actually spawns
+  `sentinel-analyzer` (its log file was written with the full pipeline trace: config loaded, 12
+  events loaded, 3 rules registered, 0 incidents -- correct given `analyze()` is stubbed), and
+  confirmed GET-by-id/PATCH-status/DELETE all work correctly against a manually-inserted test
+  incident, including their 404 paths. Test data cleared from MongoDB afterward.

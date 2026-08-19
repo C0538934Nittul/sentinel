@@ -1,9 +1,7 @@
 /**
- * Handlers for /v1/events. Zod request schemas are written in full and now wired up to
- * validate incoming requests (Phase 3 -- boilerplate request parsing, not assessed logic).
- * The subsequent call into src/services/eventService.ts is still stubbed, so a *valid* request
- * currently surfaces a 500 ("not implemented") -- only the validation seam is real so far.
- * Full CRUD wiring against MongoDB is Phase 5.
+ * Handlers for /v1/events. Zod request schemas validate incoming requests; both handlers call
+ * through to src/services/eventService.ts, which is now implemented against MongoDB (Step 3,
+ * Phase 5 -- first draft, not the final assessed version).
  * Component: api/src/controllers
  */
 
@@ -48,7 +46,6 @@ export async function listEvents(req: Request, res: Response, next: NextFunction
   }
 
   try {
-    // TODO(student): eventService.listEvents is still stubbed -- this call currently rejects.
     const events = await eventService.listEvents(parsed.data);
     res.status(200).json(events);
   } catch (err) {
@@ -72,7 +69,6 @@ export async function createEvents(req: Request, res: Response, next: NextFuncti
   const events = "events" in parsed.data ? parsed.data.events : [parsed.data];
 
   try {
-    // TODO(student): eventService.createEvents is still stubbed -- this call currently rejects.
     const created = await eventService.createEvents(events);
     res.status(201).json(created);
   } catch (err) {

@@ -40,9 +40,10 @@ const securityEventSchema = new Schema(
   },
 );
 
-// eventId must be globally unique -- this is the primary correlation key referenced by
-// IncidentResult.supportingEventIds, so a duplicate would silently corrupt that linkage.
-securityEventSchema.index({ eventId: 1 }, { unique: true });
+// eventId's uniqueness is enforced by `unique: true` on the field above (this is the primary
+// correlation key referenced by IncidentResult.supportingEventIds, so a duplicate would
+// silently corrupt that linkage) -- an additional explicit .index({ eventId: 1 }, { unique:
+// true }) here would just be a duplicate index definition; Mongoose warns about that.
 
 // Compound index supporting the analyzer/API's most common query shape: "events from this
 // source, most recent first" -- used both when assembling analysis windows and when paging

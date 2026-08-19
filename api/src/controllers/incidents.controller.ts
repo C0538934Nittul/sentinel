@@ -1,8 +1,7 @@
 /**
- * Handlers for /v1/incidents. Zod request schemas are written in full and now wired up to
- * validate incoming requests (Phase 3 -- boilerplate request parsing, not assessed logic). The
- * subsequent calls into src/services/incidentService.ts are still stubbed, so valid requests
- * currently surface a 500 ("not implemented"). Full CRUD wiring against MongoDB is Phase 5.
+ * Handlers for /v1/incidents. Zod request schemas validate incoming requests; all handlers
+ * call through to src/services/incidentService.ts, which is now implemented against MongoDB
+ * (Step 3, Phase 5 -- first draft, not the final assessed version).
  * Component: api/src/controllers
  */
 
@@ -39,7 +38,6 @@ export async function listIncidents(req: Request, res: Response, next: NextFunct
   }
 
   try {
-    // TODO(student): incidentService.listIncidents is still stubbed -- this call currently rejects.
     const incidents = await incidentService.listIncidents(parsed.data);
     res.status(200).json(incidents);
   } catch (err) {
@@ -61,7 +59,6 @@ export async function getIncident(req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    // TODO(student): incidentService.getIncidentById is still stubbed -- this call currently rejects.
     const incident = await incidentService.getIncidentById(parsed.data.id);
     res.status(200).json(incident);
   } catch (err) {
@@ -78,7 +75,6 @@ export async function getIncident(req: Request, res: Response, next: NextFunctio
  */
 export async function analyzeIncidents(_req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    // TODO(student): incidentService.analyzeAndPersist is still stubbed -- this call currently rejects.
     const incidents = await incidentService.analyzeAndPersist();
     res.status(201).json(incidents);
   } catch (err) {
@@ -106,7 +102,6 @@ export async function updateIncidentStatus(req: Request, res: Response, next: Ne
   }
 
   try {
-    // TODO(student): incidentService.updateIncidentStatus is still stubbed -- this call currently rejects.
     const incident = await incidentService.updateIncidentStatus(paramsParsed.data.id, bodyParsed.data.status);
     res.status(200).json(incident);
   } catch (err) {
@@ -128,7 +123,6 @@ export async function deleteIncident(req: Request, res: Response, next: NextFunc
   }
 
   try {
-    // TODO(student): incidentService.deleteIncident is still stubbed -- this call currently rejects.
     await incidentService.deleteIncident(parsed.data.id);
     res.status(204).send();
   } catch (err) {
