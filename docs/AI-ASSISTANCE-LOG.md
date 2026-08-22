@@ -179,3 +179,51 @@ were **not** touched -- still `TODO(student)`, still throwing/returning `{}` as 
   shape `lib/types.ts` expects, with CORS headers present. Please load the app in an actual
   browser and confirm the dashboard/events/incidents pages populate as expected before relying
   on this being fully verified.
+
+## Step 5 -- Test harness and memory-verification tooling only
+
+**Scope note, important:** a Step 5 prompt asked for the four assessed methods
+(`RepeatedFailureRule::evaluate`, `SuccessAfterFailuresRule::evaluate`,
+`MultiAccountProbeRule::evaluate`, `ThreatAnalyzer::analyze`) to be implemented, plus a "study
+script" to defend them on camera without notes. **Both were declined.** These four methods are
+the core of what's being assessed via a no-notes oral defense specifically designed to verify
+the student did this work themselves -- writing the algorithm and then coaching its defense
+would misrepresent authorship on a graded, recorded assessment, not just be "AI-assisted
+coding." All four methods remain untouched `TODO(student)` stubs, exactly as left in Step 3.
+What follows is test/tooling infrastructure only, built at the requester's explicit choice after
+this was raised.
+
+- `analyzer/tests/support/EventBuilder.hpp` -- fluent builder for `SecurityEvent` test fixtures,
+  timestamps as offsets from a fixed non-wall-clock base instant (`testBaseTime()`,
+  2026-01-01T00:00:00.000Z). Builds through the real `SecurityEvent::fromJson`, so a
+  builder-produced event is validated identically to a real ingested one.
+- `analyzer/tests/support/EventSeq.hpp` -- `failureSeries(options)` (N failures, configurable
+  spacing/source/distinct-account-count) and `trailingSuccess(series, delay, ...)`. Generic
+  generators; they don't encode what count/spacing/window should trigger a rule -- that's your
+  call to make and test.
+- `analyzer/tests/support/Matchers.hpp` -- Catch2 matchers `FiresRule(id)`, `FiresNothing()`,
+  `HasSeverity(sev)`, `HasEvidenceCount(n)` for readable assertions once you write the rule
+  tests. Hit and fixed a real compiler error here: `Catch::Matchers::MatcherGenericBase` has its
+  own 0-arg `toString()` member that shadows `sentinel::toString(Severity)` via member lookup
+  inside a derived matcher class -- fixed with a fully-qualified call.
+- `analyzer/tests/support/Fixtures.hpp` -- `sampleDataPath(filename)`, resolved via a
+  CMake-injected `SENTINEL_SAMPLE_DATA_DIR` compile definition rather than a
+  working-directory-relative path (ctest's cwd isn't guaranteed to be the repo root).
+- `analyzer/tests/test_support_harness.cpp` -- 10 real tests proving the four support headers
+  above actually work (builder output, series generation, round-robin accounts, matcher
+  behavior against manually-constructed `IncidentResult`s) -- constructs no `IncidentResult` via
+  any `DetectionRule`, so nothing here touches or presupposes assessed logic.
+- `analyzer/CMakePresets.json` -- added an `asan` preset
+  (`-fsanitize=address,undefined -fno-omit-frame-pointer`), separate build directory from
+  debug/release.
+- `docs/memory-verification.md` -- documents the `asan` preset and the macOS `leaks` command,
+  what each does and doesn't prove (notably: LeakSanitizer is unsupported on macOS, so ASan here
+  is a correctness/UB tool, not a leak detector -- `leaks` is what covers that). Includes a
+  baseline run against the current (still-stubbed) codebase: `ctest --preset asan` 78/78 passing
+  with no sanitizer reports, `leaks --atExit` reporting 0 leaks. **Re-run both after you
+  implement the four methods** -- the baseline isn't meaningful evidence of your own
+  memory-management work yet, since the stubbed paths barely exercise ownership.
+- **Verify:** all of the above is infrastructure you can trust and build on directly -- none of
+  it encodes rule-specific expected behavior. The four `evaluate()`/`analyze()` methods, and the
+  test bodies in `test_RepeatedFailureRule.cpp` / `test_SuccessAfterFailuresRule.cpp` /
+  `test_MultiAccountProbeRule.cpp` / `test_ThreatAnalyzer.cpp`, are still yours to write.

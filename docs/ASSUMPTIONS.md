@@ -30,6 +30,32 @@ to revise, but revising it means touching multiple files, so it's collected in o
 - Field names: `windowSeconds`, `threshold`, `severity`, `score` — chosen to read naturally in
   both JSON and as C++ struct members.
 
+## Test harness (Step 5)
+
+- `analyzer/tests/support/` (`EventBuilder.hpp`, `EventSeq.hpp`, `Matchers.hpp`, `Fixtures.hpp`)
+  is scaffolding for you to write the rule/`ThreatAnalyzer` tests on top of -- it does not
+  implement or presuppose any rule's behavior. `EventBuilder`/`EventSeq` build inputs;
+  `Matchers` only inspect `IncidentResult`s you already have; `Fixtures` resolves
+  `sample-data/` paths.
+- Deliberately declined to write `docs/detection-design.md` or the rule-specific test bodies
+  (`test_RepeatedFailureRule.cpp` etc. remain the empty checklists from Step 3) -- designing the
+  sliding-window/suppression/lookback semantics and encoding expected outcomes in tests *is* the
+  assessed work here, not infrastructure. See the conversation for the full reasoning; short
+  version: a no-notes oral defense exists specifically to verify you did this part yourself.
+- `EventBuilder`'s ISO-8601 formatter is an intentionally independent reimplementation of the
+  same string format `SecurityEvent::fromJson` parses, not a shared helper -- so this test
+  infrastructure has no compile-time dependency on `SecurityEvent.cpp`'s internals and won't
+  need touching if you rewrite that parsing.
+- `Matchers.hpp::HasSeverityMatcher::match` calls `sentinel::toString(...)` fully-qualified,
+  not unqualified `toString(...)` -- `Catch::Matchers::MatcherGenericBase` has its own 0-arg
+  `toString()` member that member-lookup finds first inside a derived class, shadowing the
+  free-function overload from `sentinel::`. A real, only-slightly-confusing compiler error hit
+  and fixed while building this file.
+- `asan` CMake preset added (`analyzer/CMakePresets.json`), separate build directory from
+  `debug`/`release` so sanitizer instrumentation never ships in a binary you'd actually run
+  outside testing. See `docs/memory-verification.md` for what it does and doesn't prove,
+  alongside the macOS `leaks` tool.
+
 ## EventReader: skip-and-log vs. fail-the-whole-file (Step 3, Phase 5)
 
 `EventReader::readFromStream` now has a real implementation. When an individual event in the
